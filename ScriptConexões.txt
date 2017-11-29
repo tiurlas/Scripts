@@ -1,0 +1,45 @@
+#!/bin/bash
+
+for i in `cat Lista_mypms.csv`
+do
+
+USER=`awk -F"," '{print $1}' Lista_mypms.csv | head -n 1`
+HOST=`awk -F"," '{print $2}' Lista_mypms.csv | head -n 1`
+PASS=`awk -F"," '{print $3}' Lista_mypms.csv | head -n 1`
+
+if ping -c2 -W2 "$HOST" > /dev/null;
+then
+echo "-------------------------------------------------------------------------"
+	
+	echo "on"
+
+echo "-------------------------------------------------------------------------"
+
+for i in `cat Lista_mypms.csv`
+do
+
+echo "-------------------------------------------------------------------------"
+
+if sshpass -p ${PASS} ssh -o StrictHostKeyChecking=no $USER@$HOST "exit;" "$HOST" >> ips_ok.txt;
+then
+
+echo "-------------------------------------------------------------------------"
+else
+echo "-------------------------------------------------------------------------"
+	
+	echo "Senha Inválida"
+	echo "$HOST" >> ips_nok.txt
+
+echo "-------------------------------------------------------------------------"
+fi
+done
+else
+echo "-------------------------------------------------------------------------"
+	
+	echo "off"
+	echo "$HOST" >> ips_off.txt
+	
+echo "-------------------------------------------------------------------------"
+fi
+done
+exit 0
