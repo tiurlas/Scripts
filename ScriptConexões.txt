@@ -1,45 +1,41 @@
 #!/bin/bash
 
-for i in `cat Lista_mypms.csv`
-do
+checkPing(){
+	ping -c2 -W2 "$HOST" > /dev/null;
+}
 
-USER=`echo $i | awk -F"," '{print $1}'`
-HOST=`echo $i | awk -F"," '{print $2}'`
-PASS=`echo $i | awk -F"," '{print $3}'`
+checkSSH(){
+	sshpass -p ${PASS} ssh -o StrictHostKeyChecking=no $USER@$HOST hostname >> ips_ok.txt;
+}	
 
-if ping -c2 -W2 "$HOST" > /dev/null;
-then
-echo "-------------------------------------------------------------------------"
-	
-	echo "on"
+for i in `cat Lista_mypms.csv`; do
 
-echo "-------------------------------------------------------------------------"
+	USER=`echo $i | awk -F"," '{print $1}'`
+	HOST=`echo $i | awk -F"," '{print $2}'`
+	PASS=`echo $i | awk -F"," '{print $3}'`
 
-for i in `cat Lista_mypms.csv`
-do
+	if checkPing; then
+		echo "----------------------------------------------------------"
+		echo "             IP "$HOST" Válido                            "
+		echo "----------------------------------------------------------"
 
-echo "-------------------------------------------------------------------------"
+		if checkSSH; then
+			echo "----------------------------------------------------------"
+			echo "					***Conectado***                         "
+			echo "----------------------------------------------------------"
+		else
+			echo "----------------------------------------------------------"
+			echo "               ###Senha Inválida###                       "
+			echo "----------------------------------------------------------"
+			echo "$HOST" >> ips_nok.txt
+		fi
 
-if sshpass -p ${PASS} ssh -o StrictHostKeyChecking=no $USER@$HOST "exit;" "$HOST" >> ips_ok.txt;
-then
+	else
+		echo "----------------------------------------------------------"
+		echo "             IP "$HOST" Inválido                          "
+		echo "----------------------------------------------------------"
+		echo "$HOST" >> ips_off.txt
 
-echo "-------------------------------------------------------------------------"
-else
-echo "-------------------------------------------------------------------------"
-	
-	echo "Senha Inválida"
-	echo "$HOST" >> ips_nok.txt
-
-echo "-------------------------------------------------------------------------"
-fi
-done
-else
-echo "-------------------------------------------------------------------------"
-	
-	echo "off"
-	echo "$HOST" >> ips_off.txt
-	
-echo "-------------------------------------------------------------------------"
-fi
+	fi
 done
 exit 0
