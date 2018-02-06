@@ -1,6 +1,6 @@
 #!/bin/bash
 
-###Criando a view, com a senha já decodificada
+###Criando a view, com a senha jÃ¡ decodificada
 #CREATE VIEW VW_MYPMS AS
 #SELECT t1.id, t1.type, t2.host, t2.ip, t1.user, (CONVERT(FROM_BASE64(t1.passwd) USING latin2)) as passwd
 #FROM tpd.usuarios t1 LEFT JOIN tpd.servidores t2 on (t1.id = t2.id);
@@ -27,23 +27,23 @@ for i in `cat Lista_mypms.csv`; do
 
 	if checkPing; then
 		echo "----------------------------------------------------------"
-		echo "             IP "$HOST" Válido                            "
+		echo "             IP "$HOST" VÃ¡lido                            "
 		echo "----------------------------------------------------------"
 
 		if checkSSH; then
 			echo "----------------------------------------------------------"
-			echo "					***Conectado***                         "
+			echo "			***Conectado***                         "
 			echo "----------------------------------------------------------"
 		else
 			echo "----------------------------------------------------------"
-			echo "               ###Senha Inválida###                       "
+			echo "               ###Senha InvÃ¡lida###                       "
 			echo "----------------------------------------------------------"
 			echo "$HOST" >> ips_nok.txt
 		fi
 
 	else
 		echo "----------------------------------------------------------"
-		echo "             IP "$HOST" Inválido                          "
+		echo "             IP "$HOST" InvÃ¡lido                          "
 		echo "----------------------------------------------------------"
 		echo "$HOST" >> ips_off.txt
 
