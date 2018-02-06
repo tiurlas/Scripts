@@ -9,10 +9,6 @@ instalarNginx(){
 	apt-get update -y && apt-get install -y nginx
 	systemctl enable nginx
 	systemctl start nginx
-	
-	echo "**************"
-	echo "*Status Nginx*"
-	echo "**************"
 
 }
 
@@ -107,16 +103,6 @@ instalarNginx
 instalarDocker
 configurarNginx
 criarConteiners
-echo "###############################"
-echo "######Realizar Conferência#####"
-echo "###############################"
-echo "####Conferindo Status Nginx####"
-echo "###############################"
-systemctl status nginx
-echo "###############################"
-echo "#Conferindo Contêiners Criados#"
-echo "###############################"
-docker ps -a
 echo "###############################"
 echo "#######Script Finalizado#######"
 echo "###############################"
