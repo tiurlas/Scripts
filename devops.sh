@@ -83,16 +83,15 @@ criarConteiners(){
 
 	
 	echo "Criando arquivos index.html"
-#	mkdir -p ~/apache/app1/
+	mkdir -p ~/apache/app1/
 	mkdir -p ~/apache/app2/
 	mkdir -p ~/apache/app3/
-#	echo "App1" > ~/apache/app1/index.html
+	echo "App1" > ~/apache/app1/index.html
 	echo "App2" > ~/apache/app2/index.html
 	echo "App3" > ~/apache/app3/index.html
 
 	echo "Subindo os contêiners"
-	#docker run -dit --name app1 -p 8081:80 -v ~/apache/app1/:/usr/local/apache2/htdocs/ httpd:2.4
-	docker run -dit --name app1 -p 8081:3000 redmine 
+	docker run -dit --name app1 -p 8081:80 -v ~/apache/app1/:/usr/local/apache2/htdocs/ httpd:2.4
 	docker run -dit --name app2 -p 8082:80 -v ~/apache/app2/:/usr/local/apache2/htdocs/ httpd:2.4
 	docker run -dit --name app3 -p 8083:80 -v ~/apache/app3/:/usr/local/apache2/htdocs/ httpd:2.4
 
